@@ -5,6 +5,7 @@ import '../models/lamp_device.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/constants.dart';
 import '../../../shared/widgets/color_wheel_picker.dart';
+import 'diagnostics_screen.dart';
 
 class DeviceControlScreen extends ConsumerStatefulWidget {
   const DeviceControlScreen({super.key, required this.deviceId});
@@ -46,6 +47,17 @@ class _DeviceControlScreenState extends ConsumerState<DeviceControlScreen>
       appBar: AppBar(
         title: Text(device.displayName),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.bug_report_outlined, size: 20),
+            tooltip: 'Diagnostics',
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) =>
+                    DiagnosticsScreen(initialIp: device.ipAddress),
+              ),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.only(right: 8),
             child: _PowerButton(

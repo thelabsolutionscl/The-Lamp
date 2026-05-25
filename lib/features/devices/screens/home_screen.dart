@@ -4,6 +4,7 @@ import '../providers/devices_provider.dart';
 import '../models/lamp_device.dart';
 import '../../../core/theme/app_theme.dart';
 import 'device_control_screen.dart';
+import 'diagnostics_screen.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -64,6 +65,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             icon: const Icon(Icons.add_rounded),
             tooltip: 'Add manually',
             onPressed: () => _showAddDialog(context),
+          ),
+          IconButton(
+            icon: const Icon(Icons.bug_report_outlined),
+            tooltip: 'Diagnostics',
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (_) => const DiagnosticsScreen()),
+            ),
           ),
         ],
       ),
@@ -296,6 +306,11 @@ class _DeviceCard extends ConsumerWidget {
                   borderRadius: BorderRadius.circular(2))),
           const SizedBox(height: 12),
           ListTile(
+            leading: const Icon(Icons.bug_report_outlined),
+            title: const Text('Test Connection'),
+            onTap: () => Navigator.pop(ctx, 'diag'),
+          ),
+          ListTile(
             leading:
                 const Icon(Icons.drive_file_rename_outline_rounded),
             title: const Text('Rename'),
@@ -317,6 +332,14 @@ class _DeviceCard extends ConsumerWidget {
       ref.read(devicesProvider.notifier).remove(device.id);
     } else if (action == 'rename' && context.mounted) {
       _showRenameDialog(context, ref);
+    } else if (action == 'diag' && context.mounted) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) =>
+              DiagnosticsScreen(initialIp: device.ipAddress),
+        ),
+      );
     }
   }
 
