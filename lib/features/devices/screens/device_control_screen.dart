@@ -46,7 +46,6 @@ class _DeviceControlScreenState extends ConsumerState<DeviceControlScreen>
       appBar: AppBar(
         title: Text(device.displayName),
         actions: [
-          // Power toggle
           Padding(
             padding: const EdgeInsets.only(right: 8),
             child: _PowerButton(
@@ -59,11 +58,8 @@ class _DeviceControlScreenState extends ConsumerState<DeviceControlScreen>
       ),
       body: Column(
         children: [
-          // Color preview bar
-          _ColorPreviewBar(device: device, lc: lc),
-          // Tab bar
+          _ColorPreviewBar(device: device),
           _LampTabBar(controller: _tabs, lc: lc),
-          // Tab content
           Expanded(
             child: TabBarView(
               controller: _tabs,
@@ -72,16 +68,19 @@ class _DeviceControlScreenState extends ConsumerState<DeviceControlScreen>
                 _ColorTab(
                   device: device,
                   brightness: _brightness,
-                  onColorChanged: (c) =>
-                      notifier.setColor(c.red, c.green, c.blue),
+                  onColorChanged: (c) {
+                    final r = (c.r * 255.0).round() & 0xff;
+                    final g = (c.g * 255.0).round() & 0xff;
+                    final b = (c.b * 255.0).round() & 0xff;
+                    notifier.setColor(r, g, b);
+                  },
                   onBrightnessChanged: (v) {
                     setState(() => _brightness = v);
                     final c = device.currentColor;
-                    final scaled = (v * 255).round();
                     notifier.setColor(
-                      (c.red * v).round(),
-                      (c.green * v).round(),
-                      (c.blue * v).round(),
+                      ((c.r * 255.0).round() * v).round(),
+                      ((c.g * 255.0).round() * v).round(),
+                      ((c.b * 255.0).round() * v).round(),
                     );
                   },
                   lc: lc,
@@ -100,9 +99,8 @@ class _DeviceControlScreenState extends ConsumerState<DeviceControlScreen>
 // ─── Color preview bar ───────────────────────────────────────────────────────
 
 class _ColorPreviewBar extends StatelessWidget {
-  const _ColorPreviewBar({required this.device, required this.lc});
+  const _ColorPreviewBar({required this.device});
   final LampDevice device;
-  final LampColors lc;
 
   @override
   Widget build(BuildContext context) {
@@ -113,12 +111,11 @@ class _ColorPreviewBar extends StatelessWidget {
       decoration: BoxDecoration(
         gradient: device.isOn
             ? LinearGradient(colors: [
-                color.withOpacity(0),
+                color.withValues(alpha: 0),
                 color,
-                color.withOpacity(0),
+                color.withValues(alpha: 0),
               ])
             : null,
-        color: device.isOn ? null : Colors.transparent,
       ),
     );
   }
@@ -143,9 +140,9 @@ class _PowerButton extends StatelessWidget {
         height: 40,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: isOn ? lc.amber.withOpacity(0.2) : lc.surface,
+          color: isOn ? lc.amber.withValues(alpha: 0.2) : lc.surface,
           border: Border.all(
-            color: isOn ? lc.amber : lc.subtle.withOpacity(0.4),
+            color: isOn ? lc.amber : lc.subtle.withValues(alpha: 0.4),
             width: 1.5,
           ),
         ),
@@ -222,7 +219,6 @@ class _ColorTab extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 28),
       child: Column(
         children: [
-          // Color wheel
           Center(
             child: ColorWheelPicker(
               color: device.currentColor,
@@ -231,7 +227,6 @@ class _ColorTab extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 32),
-          // Brightness slider
           _SliderRow(
             label: 'Brightness',
             icon: Icons.brightness_6_rounded,
@@ -260,7 +255,6 @@ class _WhiteTab extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
       child: Column(
         children: [
-          // Preview
           Center(
             child: Container(
               width: 80,
@@ -273,14 +267,14 @@ class _WhiteTab extends StatelessWidget {
                             const Color(0xFFFFD080),
                             Colors.white,
                             device.coolWhite / 255)!
-                        .withOpacity(device.warmWhite / 255),
+                        .withValues(alpha: device.warmWhite / 255),
                     Colors.transparent,
                   ],
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFFFFD080).withOpacity(
-                        (device.warmWhite / 255) * 0.6),
+                    color: const Color(0xFFFFD080).withValues(
+                        alpha: (device.warmWhite / 255) * 0.6),
                     blurRadius: 24,
                     spreadRadius: 4,
                   ),
@@ -299,7 +293,6 @@ class _WhiteTab extends StatelessWidget {
             onChanged: (v) => notifier.setWarmWhite((v * 255).round()),
             lc: lc,
           ),
-          const SizedBox(height: 8),
           if (device.deviceType == DeviceType.cct) ...[
             const SizedBox(height: 8),
             _SliderRow(
@@ -426,8 +419,8 @@ class _SliderRow extends StatelessWidget {
             const Spacer(),
             Text(
               '${(value * 100).round()}%',
-              style: TextStyle(
-                  color: lc.onSurface,
+              style: const TextStyle(
+                  color: Color(0xFFEAEAEA),
                   fontWeight: FontWeight.w600,
                   fontSize: 13),
             ),
@@ -440,8 +433,4 @@ class _SliderRow extends StatelessWidget {
       ],
     );
   }
-}
-
-extension on LampColors {
-  Color get onSurface => const Color(0xFFEAEAEA);
 }

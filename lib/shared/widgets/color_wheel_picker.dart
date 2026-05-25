@@ -112,16 +112,19 @@ class _WheelPainter extends CustomPainter {
       ).createShader(rect);
     canvas.drawCircle(center, radius, huePaint);
 
-    // White saturation overlay (center = white, edge = full saturation)
+    // Saturation overlay (white center fades to transparent edge)
     final satPaint = Paint()
       ..shader = RadialGradient(
-        colors: [Colors.white.withOpacity(value), Colors.transparent],
+        colors: [
+          Colors.white.withValues(alpha: value),
+          Colors.transparent,
+        ],
       ).createShader(rect);
     canvas.drawCircle(center, radius, satPaint);
 
-    // Dark border
+    // Subtle border
     final borderPaint = Paint()
-      ..color = Colors.white.withOpacity(0.08)
+      ..color = Colors.white.withValues(alpha: 0.08)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.5;
     canvas.drawCircle(center, radius, borderPaint);
@@ -145,8 +148,12 @@ class _Indicator extends StatelessWidget {
         shape: BoxShape.circle,
         border: Border.all(color: Colors.white, width: 2.5),
         boxShadow: [
-          BoxShadow(color: color.withOpacity(0.6), blurRadius: 10, spreadRadius: 2),
-          BoxShadow(color: Colors.black.withOpacity(0.4), blurRadius: 4),
+          BoxShadow(
+              color: color.withValues(alpha: 0.6),
+              blurRadius: 10,
+              spreadRadius: 2),
+          BoxShadow(
+              color: Colors.black.withValues(alpha: 0.4), blurRadius: 4),
         ],
       ),
     );

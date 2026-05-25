@@ -76,7 +76,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               child: ListView.builder(
                 padding: const EdgeInsets.only(top: 8, bottom: 100),
                 itemCount: state.devices.length,
-                itemBuilder: (ctx, i) => _DeviceCard(device: state.devices[i]),
+                itemBuilder: (ctx, i) =>
+                    _DeviceCard(device: state.devices[i]),
               ),
             ),
       floatingActionButton: FloatingActionButton(
@@ -160,9 +161,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             ipAddress: ip,
                             macAddress: '',
                             modelName: 'Magic Home',
-                            customName: nameController.text.trim().isEmpty
-                                ? null
-                                : nameController.text.trim(),
+                            customName:
+                                nameController.text.trim().isEmpty
+                                    ? null
+                                    : nameController.text.trim(),
                           ),
                         );
                     Navigator.pop(ctx);
@@ -202,17 +204,18 @@ class _DeviceCard extends ConsumerWidget {
           padding: const EdgeInsets.all(16),
           child: Row(
             children: [
-              // Color dot
               Container(
                 width: 44,
                 height: 44,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: device.isOn ? color : lc.subtle.withOpacity(0.3),
+                  color: device.isOn
+                      ? color
+                      : lc.subtle.withValues(alpha: 0.3),
                   boxShadow: device.isOn
                       ? [
                           BoxShadow(
-                            color: color.withOpacity(0.5),
+                            color: color.withValues(alpha: 0.5),
                             blurRadius: 12,
                             spreadRadius: 2,
                           )
@@ -225,7 +228,6 @@ class _DeviceCard extends ConsumerWidget {
                         color: lc.subtle, size: 20),
               ),
               const SizedBox(width: 14),
-              // Info
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -248,14 +250,13 @@ class _DeviceCard extends ConsumerWidget {
                   ],
                 ),
               ),
-              // Status badge
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
                   color: device.isOn
-                      ? lc.amber.withOpacity(0.15)
-                      : lc.subtle.withOpacity(0.1),
+                      ? lc.amber.withValues(alpha: 0.15)
+                      : lc.subtle.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
@@ -291,18 +292,20 @@ class _DeviceCard extends ConsumerWidget {
               width: 36,
               height: 4,
               decoration: BoxDecoration(
-                  color: lc.subtle.withOpacity(0.4),
+                  color: lc.subtle.withValues(alpha: 0.4),
                   borderRadius: BorderRadius.circular(2))),
           const SizedBox(height: 12),
           ListTile(
-            leading: const Icon(Icons.drive_file_rename_outline_rounded),
+            leading:
+                const Icon(Icons.drive_file_rename_outline_rounded),
             title: const Text('Rename'),
             onTap: () => Navigator.pop(ctx, 'rename'),
           ),
           ListTile(
-            leading: Icon(Icons.delete_outline_rounded, color: Colors.red[400]),
-            title:
-                Text('Remove', style: TextStyle(color: Colors.red[400])),
+            leading:
+                Icon(Icons.delete_outline_rounded, color: Colors.red[400]),
+            title: Text('Remove',
+                style: TextStyle(color: Colors.red[400])),
             onTap: () => Navigator.pop(ctx, 'remove'),
           ),
           const SizedBox(height: 8),
@@ -318,7 +321,8 @@ class _DeviceCard extends ConsumerWidget {
   }
 
   Future<void> _showRenameDialog(BuildContext context, WidgetRef ref) async {
-    final ctrl = TextEditingController(text: device.customName ?? device.displayName);
+    final ctrl =
+        TextEditingController(text: device.customName ?? device.displayName);
     await showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -344,8 +348,8 @@ class _DeviceCard extends ConsumerWidget {
                   .rename(device.id, ctrl.text.trim());
               Navigator.pop(ctx);
             },
-            child: Text('Save',
-                style: TextStyle(color: context.lc.amber)),
+            child:
+                Text('Save', style: TextStyle(color: context.lc.amber)),
           ),
         ],
       ),
@@ -374,7 +378,9 @@ class _EmptyState extends StatelessWidget {
                 shape: BoxShape.circle,
               ),
               child: Icon(
-                isScanning ? Icons.wifi_find_rounded : Icons.lightbulb_outline_rounded,
+                isScanning
+                    ? Icons.wifi_find_rounded
+                    : Icons.lightbulb_outline_rounded,
                 size: 36,
                 color: lc.amber,
               ),
@@ -382,7 +388,8 @@ class _EmptyState extends StatelessWidget {
             const SizedBox(height: 20),
             Text(
               isScanning ? 'Scanning network…' : 'No devices found',
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+              style:
+                  const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 8),
             Text(

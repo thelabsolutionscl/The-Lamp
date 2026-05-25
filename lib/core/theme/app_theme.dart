@@ -29,7 +29,7 @@ class AppTheme {
         bodyColor: _onSurface,
         displayColor: _onSurface,
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: _card,
         elevation: 0,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
@@ -57,17 +57,18 @@ class AppTheme {
       sliderTheme: SliderThemeData(
         activeTrackColor: _amber,
         thumbColor: _amber,
-        inactiveTrackColor: _subtle.withOpacity(0.25),
+        inactiveTrackColor: _subtle.withValues(alpha: 0.25),
         trackHeight: 5,
         thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 11),
         overlayShape: const RoundSliderOverlayShape(overlayRadius: 20),
-        overlayColor: Color(0x22FF9500),
+        overlayColor: const Color(0x22FF9500),
       ),
       switchTheme: SwitchThemeData(
         thumbColor: WidgetStateProperty.resolveWith((s) =>
             s.contains(WidgetState.selected) ? Colors.black : _subtle),
-        trackColor: WidgetStateProperty.resolveWith((s) =>
-            s.contains(WidgetState.selected) ? _amber : _subtle.withOpacity(0.3)),
+        trackColor: WidgetStateProperty.resolveWith((s) => s.contains(WidgetState.selected)
+            ? _amber.withValues(alpha: 1.0)
+            : _subtle.withValues(alpha: 0.3)),
       ),
       dividerTheme: const DividerThemeData(color: _divider, thickness: 1),
       iconTheme: const IconThemeData(color: _onSurface),

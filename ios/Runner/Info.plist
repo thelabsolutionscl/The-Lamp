@@ -33,16 +33,23 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 
-	<!-- Bluetooth permissions -->
+	<!-- Bluetooth -->
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>The Lamp uses Bluetooth to discover and control your BLE smart lights.</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>The Lamp uses Bluetooth to control your smart lights.</string>
 
-	<!-- Local network / Bonjour -->
+	<!-- Local network -->
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>The Lamp scans your local network to discover Magic Home compatible devices.</string>
 	<key>NSBonjourServices</key>
@@ -50,7 +57,7 @@
 		<string>_hf._tcp</string>
 	</array>
 
-	<!-- Location (required for BLE on iOS) -->
+	<!-- Location (required for BLE scan) -->
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Required to scan for Bluetooth devices nearby.</string>
 
