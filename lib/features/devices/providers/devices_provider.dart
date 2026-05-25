@@ -123,6 +123,8 @@ class DeviceControlNotifier extends StateNotifier<LampDevice> {
   Future<void> connect() async {
     if (state.connectionType == ConnectionType.wifi) {
       final ok = await _proto.connect();
+      state = state.copyWith(reachable: ok);
+      _syncToList();
       if (ok) await refresh();
     }
   }

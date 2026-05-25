@@ -22,6 +22,7 @@ class LampDevice {
     this.brightness = 255,
     this.customName,
     this.bleId,
+    this.reachable, // null=unknown, true=online, false=unreachable
   });
 
   final String id;
@@ -38,6 +39,7 @@ class LampDevice {
   final int coolWhite;
   final int brightness;
   final String? customName;
+  final bool? reachable;
   final String? bleId;
 
   String get displayName {
@@ -64,6 +66,9 @@ class LampDevice {
 
   Color get currentColor => Color.fromARGB(255, r, g, b);
 
+  // Sentinel so copyWith can distinguish "clear reachable to null" vs "keep current"
+  static const Object _sentinel = Object();
+
   LampDevice copyWith({
     String? id,
     String? ipAddress,
@@ -80,6 +85,7 @@ class LampDevice {
     int? brightness,
     String? customName,
     String? bleId,
+    Object? reachable = _sentinel,
   }) =>
       LampDevice(
         id: id ?? this.id,
@@ -97,6 +103,9 @@ class LampDevice {
         brightness: brightness ?? this.brightness,
         customName: customName ?? this.customName,
         bleId: bleId ?? this.bleId,
+        reachable: identical(reachable, _sentinel)
+            ? this.reachable
+            : reachable as bool?,
       );
 
   Map<String, dynamic> toJson() => {
@@ -108,6 +117,14 @@ class LampDevice {
         'connectionType': connectionType.index,
         'customName': customName,
         'bleId': bleId,
+        // Persist last known state
+        'isOn': isOn,
+        'r': r,
+        'g': g,
+        'b': b,
+        'warmWhite': warmWhite,
+        'coolWhite': coolWhite,
+        'brightness': brightness,
       };
 
   factory LampDevice.fromJson(Map<String, dynamic> json) => LampDevice(
@@ -120,6 +137,13 @@ class LampDevice {
             ConnectionType.values[json['connectionType'] as int? ?? 0],
         customName: json['customName'] as String?,
         bleId: json['bleId'] as String?,
+        isOn: json['isOn'] as bool? ?? false,
+        r: json['r'] as int? ?? 255,
+        g: json['g'] as int? ?? 165,
+        b: json['b'] as int? ?? 0,
+        warmWhite: json['warmWhite'] as int? ?? 0,
+        coolWhite: json['coolWhite'] as int? ?? 0,
+        brightness: json['brightness'] as int? ?? 255,
       );
 
   String toJsonString() => jsonEncode(toJson());

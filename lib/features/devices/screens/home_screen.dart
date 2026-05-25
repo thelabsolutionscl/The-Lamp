@@ -260,23 +260,31 @@ class _DeviceCard extends ConsumerWidget {
                   ],
                 ),
               ),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                decoration: BoxDecoration(
-                  color: device.isOn
-                      ? lc.amber.withValues(alpha: 0.15)
-                      : lc.subtle.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Text(
-                  device.isOn ? 'On' : 'Off',
-                  style: TextStyle(
-                    color: device.isOn ? lc.amber : lc.subtle,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 12,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: device.isOn
+                          ? lc.amber.withValues(alpha: 0.15)
+                          : lc.subtle.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Text(
+                      device.isOn ? 'On' : 'Off',
+                      style: TextStyle(
+                        color: device.isOn ? lc.amber : lc.subtle,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 12,
+                      ),
+                    ),
                   ),
-                ),
+                  const SizedBox(height: 4),
+                  _ReachabilityDot(reachable: device.reachable),
+                ],
               ),
               const SizedBox(width: 4),
               Icon(Icons.chevron_right_rounded, color: lc.subtle, size: 20),
@@ -472,6 +480,41 @@ class _LampTextField extends StatelessWidget {
         ),
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+      ),
+    );
+  }
+}
+
+class _ReachabilityDot extends StatelessWidget {
+  const _ReachabilityDot({this.reachable});
+  final bool? reachable;
+
+  @override
+  Widget build(BuildContext context) {
+    final Color color;
+    final String tooltip;
+    if (reachable == true) {
+      color = const Color(0xFF4ADE80); // green
+      tooltip = 'Reachable';
+    } else if (reachable == false) {
+      color = const Color(0xFFF87171); // red
+      tooltip = 'Unreachable';
+    } else {
+      color = const Color(0xFF636366); // gray
+      tooltip = 'Not yet checked';
+    }
+    return Tooltip(
+      message: tooltip,
+      child: Container(
+        width: 7,
+        height: 7,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: color,
+          boxShadow: reachable == true
+              ? [BoxShadow(color: color.withValues(alpha: 0.6), blurRadius: 4)]
+              : null,
+        ),
       ),
     );
   }
