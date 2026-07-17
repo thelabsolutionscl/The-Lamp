@@ -60,6 +60,35 @@ export const KIND_LABEL: Record<LightKind, string> = {
   bulb: "Ampolleta",
 }
 
+/** Nombres por defecto de los ambientes semilla. */
+export const ROOM_NAMES: Record<string, string> = Object.fromEntries(
+  ROOMS.map((r) => [r.id, r.name]),
+)
+const ROOM_ORDER = ROOMS.map((r) => r.id)
+
+const titleCase = (s: string) =>
+  s.replace(/[-_]/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())
+
+/**
+ * Deriva la lista de ambientes desde las luces presentes (no hardcode: así un
+ * puente real puede traer sus propios ambientes). `overrides` permite renombrar.
+ */
+export function deriveRooms(
+  lights: Light[],
+  overrides: Record<string, string> = {},
+): Room[] {
+  const ids = Array.from(new Set(lights.map((l) => l.room)))
+  ids.sort((a, b) => {
+    const ia = ROOM_ORDER.indexOf(a)
+    const ib = ROOM_ORDER.indexOf(b)
+    if (ia !== -1 && ib !== -1) return ia - ib
+    if (ia !== -1) return -1
+    if (ib !== -1) return 1
+    return 0
+  })
+  return ids.map((id) => ({ id, name: overrides[id] ?? ROOM_NAMES[id] ?? titleCase(id) }))
+}
+
 export const SEED_LIGHTS: Light[] = [
   { id: "living-cenital", name: "Cenital living", room: "living", kind: "ceiling", watts: 60, on: true, brightness: 80, temp: 3200 },
   { id: "living-pie", name: "Lámpara de pie", room: "living", kind: "floor", watts: 40, on: true, brightness: 55, temp: 2700 },

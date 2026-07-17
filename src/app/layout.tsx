@@ -8,6 +8,8 @@ import { Footer } from "@/components/layout/Footer"
 import { LightsProvider } from "@/components/app/lights-store"
 import { Toaster } from "@/components/app/Toaster"
 import { MobileQuickBar } from "@/components/app/MobileQuickBar"
+import { OfflineBanner } from "@/components/layout/OfflineBanner"
+import { RegisterSW } from "@/components/pwa/RegisterSW"
 
 // Mismas fuentes y pesos que la web de The Lab Solutions.
 const dmSans = DM_Sans({
@@ -66,6 +68,8 @@ export default function RootLayout({
         </noscript>
       </head>
       <body className="min-h-full flex flex-col bg-[#0a0a0a] text-white">
+        <RegisterSW />
+        <OfflineBanner />
         <SiteLoader />
         <SiteBackground />
         <a

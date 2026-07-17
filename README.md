@@ -17,17 +17,25 @@ su acento cyan de marca (`#00d4cc`) reservado para lo vivo/activo y la atmósfer
 - **Control por ambiente y por luz**: switch, intensidad 1–100%, **temperatura
   de color** (cálida ↔ fría) y **color RGB** en las luces que lo soportan. La
   tarjeta “emite”: el glow toma el color real de la luz y escala con el brillo.
-- **Deshacer** (toast) tras aplicar escenas o apagar todo.
-- **PWA instalable** + barra de acciones rápidas en móvil.
+- **Gestión de dispositivos**: renombrar/agregar/quitar luces y renombrar
+  ambientes desde la UI (los ambientes se derivan de las luces, no son fijos).
+- **Ajustes**: elegir el puente (Simulado / Home Assistant), credenciales HA con
+  "probar conexión", y la tarifa eléctrica.
+- **Deshacer** (toast) tras aplicar escenas, apagar todo o eliminar una luz.
+- **PWA instalable** (íconos PNG + service worker offline) + barra de acciones
+  en móvil + banner de "sin conexión".
+- Accesibilidad: región `aria-live`, foco atrapado en el modal, estados de error
+  (`error.tsx` / `not-found.tsx`).
 - Persistencia en `localStorage`.
 
 ## Arquitectura: puente a hardware
 
 La app nunca habla con dispositivos directamente: pasa por un **`LightBridge`**
-(`src/lib/bridge.ts`). La v0 usa `MockBridge` (estado simulado en localStorage).
-Para producción se implementa la misma interfaz contra un puente real
-(Home Assistant, Hue, Tuya…) y se cambia `getBridge()` — el resto de la app no
-cambia. El modelo y la semilla viven en `src/lib/lights.ts`.
+(`src/lib/bridge.ts`). La v0 usa `MockBridge` (estado simulado en localStorage);
+ya hay un **`HomeAssistantBridge`** (REST + WebSocket para estado en vivo) que se
+activa desde Ajustes con la URL de tu HA y un token de larga duración. Para otro
+sistema (Hue, Tuya…) se implementa la misma interfaz. El modelo y la semilla
+viven en `src/lib/lights.ts`.
 
 ## Stack
 
@@ -44,6 +52,8 @@ npm run dev     # http://localhost:3000
 npm run build   # build de producción
 npm run lint
 npm test        # tests unitarios (vitest)
+npm run test:e2e # tests end-to-end (Playwright)
+npm run icons   # regenera los íconos PNG desde public/lamp-mark.svg
 ```
 
 ## Deploy (Cloudflare Workers)

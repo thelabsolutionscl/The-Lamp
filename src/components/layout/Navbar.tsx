@@ -2,8 +2,9 @@
 
 import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
-import { Menu, X } from "lucide-react"
+import { Menu, X, Settings } from "lucide-react"
 import { LampLogo } from "@/components/brand/LampLogo"
+import { SettingsModal } from "@/components/app/SettingsModal"
 
 // Navbar de The Lamp: mismo lenguaje que la web de The Lab Solutions
 // (header fijo que se funde al hacer scroll, pill deslizante bajo el
@@ -18,6 +19,7 @@ const links = [
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [settingsOpen, setSettingsOpen] = useState(false)
 
   // slide-tabs: un pill que se desliza al ítem del nav bajo el cursor/foco.
   const navRef = useRef<HTMLElement>(null)
@@ -93,13 +95,23 @@ export function Navbar() {
         </nav>
 
         {/* Estado del sistema (micro-tipografía de la identidad) */}
-        <span className="hidden lg:inline-flex items-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.03] px-3.5 py-1.5 font-mono text-[10px] uppercase tracking-[2.5px] text-white/60">
-          <span className="relative flex h-1.5 w-1.5">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#00d4cc] opacity-75" />
-            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#00d4cc]" />
+        <div className="hidden lg:flex items-center gap-3">
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.03] px-3.5 py-1.5 font-mono text-[10px] uppercase tracking-[2.5px] text-white/60">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#00d4cc] opacity-75" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#00d4cc]" />
+            </span>
+            En línea
           </span>
-          En línea
-        </span>
+          <button
+            type="button"
+            onClick={() => setSettingsOpen(true)}
+            aria-label="Ajustes"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/[0.1] text-white/60 transition-colors hover:border-[#00d4cc]/40 hover:text-white"
+          >
+            <Settings className="h-4 w-4" />
+          </button>
+        </div>
 
         {/* Navegación móvil */}
         <button
@@ -130,9 +142,18 @@ export function Navbar() {
                 {l.label}
               </Link>
             ))}
+            <button
+              type="button"
+              onClick={() => { closeMobile(); setSettingsOpen(true) }}
+              className="flex items-center gap-2 py-3 text-left text-sm font-medium text-white/85 transition-colors hover:text-white"
+            >
+              <Settings className="h-4 w-4" /> Ajustes
+            </button>
           </div>
         </nav>
       )}
+
+      <SettingsModal open={settingsOpen} onClose={() => setSettingsOpen(false)} />
     </header>
   )
 }

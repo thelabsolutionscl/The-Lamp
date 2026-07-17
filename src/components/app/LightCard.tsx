@@ -7,6 +7,9 @@ import {
   LampDesk,
   Sparkles,
   Palette,
+  Pencil,
+  Trash2,
+  Check,
   type LucideIcon,
 } from "lucide-react"
 import {
@@ -78,8 +81,10 @@ export function LampSwitch({
 // real de la luz (su temperatura o su RGB) y la intensidad del halo escala con
 // el brillo. Toma sus acciones del store.
 export function LightCard({ light }: { light: Light }) {
-  const { toggleLight, setBrightness, setTemp, setColor } = useLights()
+  const { toggleLight, setBrightness, setTemp, setColor, renameLight, removeLight } = useLights()
   const [colorOpen, setColorOpen] = useState(false)
+  const [renaming, setRenaming] = useState(false)
+  const [draft, setDraft] = useState(light.name)
   const Icon = KIND_ICONS[light.kind]
   const pct = light.brightness
   const glow = lightGlowColor(light)
@@ -93,10 +98,17 @@ export function LightCard({ light }: { light: Light }) {
       }
     : undefined
 
+  const commitRename = () => {
+    const n = draft.trim()
+    if (n) renameLight(light.id, n)
+    else setDraft(light.name)
+    setRenaming(false)
+  }
+
   return (
     <div
       className={cn(
-        "rounded-xl border bg-[#141414] p-4 transition-all duration-300 sm:p-5",
+        "group/lc relative rounded-xl border bg-[#141414] p-4 transition-all duration-300 sm:p-5",
         !light.on && "border-white/[0.08] hover:border-white/[0.14]",
       )}
       style={glowStyle}
@@ -119,10 +131,46 @@ export function LightCard({ light }: { light: Light }) {
               aria-hidden
             />
           </span>
-          <div>
-            <p className={cn("text-sm font-medium transition-colors", light.on ? "text-white/90" : "text-white/50")}>
-              {light.name}
-            </p>
+          <div className="min-w-0">
+            {renaming ? (
+              <div className="flex items-center gap-1.5">
+                <input
+                  value={draft}
+                  autoFocus
+                  onChange={(e) => setDraft(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") commitRename()
+                    if (e.key === "Escape") { setDraft(light.name); setRenaming(false) }
+                  }}
+                  className="w-32 rounded border border-white/[0.14] bg-[#0f0f0f] px-1.5 py-0.5 text-sm text-white/85 outline-none focus:border-[#00d4cc]/50"
+                />
+                <button type="button" onClick={commitRename} aria-label="Guardar nombre" className="text-[#00d4cc] hover:text-[#19ddd5]">
+                  <Check className="h-3.5 w-3.5" />
+                </button>
+              </div>
+            ) : (
+              <p className={cn("flex items-center gap-1.5 text-sm font-medium transition-colors", light.on ? "text-white/90" : "text-white/50")}>
+                {light.name}
+                <span className="inline-flex items-center gap-1 opacity-0 transition-opacity focus-within:opacity-100 group-hover/lc:opacity-100">
+                  <button
+                    type="button"
+                    onClick={() => { setDraft(light.name); setRenaming(true) }}
+                    aria-label={`Renombrar ${light.name}`}
+                    className="text-white/25 transition-colors hover:text-white/60"
+                  >
+                    <Pencil className="h-3 w-3" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => removeLight(light.id)}
+                    aria-label={`Eliminar ${light.name}`}
+                    className="text-white/25 transition-colors hover:text-[#ff4444]"
+                  >
+                    <Trash2 className="h-3 w-3" />
+                  </button>
+                </span>
+              </p>
+            )}
             <p className="mt-0.5 font-mono text-[10px] uppercase tracking-[1.5px] text-white/35">
               {light.on ? `${light.watts} W · ${pct}% · ${inColor ? "Color" : `${light.temp}K`}` : `${light.watts} W · Apagada`}
             </p>

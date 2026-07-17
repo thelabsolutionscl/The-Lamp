@@ -2,14 +2,13 @@
 
 import { useMemo, useState } from "react"
 import { Check, Pencil } from "lucide-react"
-import { ROOMS } from "@/lib/lights"
 import { dailyKwh, costClp, formatCLP } from "@/lib/energy"
 import { useLights } from "@/components/app/lights-store"
 import { Sparkline } from "@/components/ui/sparkline"
 import { NumberTicker } from "@/components/ui/number-ticker"
 
 export function StatsBar() {
-  const { lights, watts, history, tariff, setTariff } = useLights()
+  const { lights, rooms, watts, history, tariff, setTariff } = useLights()
   const [editing, setEditing] = useState(false)
   const [draft, setDraft] = useState(String(tariff))
 
@@ -104,7 +103,7 @@ export function StatsBar() {
         <p className="font-mono text-[10px] uppercase tracking-[2px] text-white/45">Ambientes activos</p>
         <p className="mt-2 text-3xl font-bold tracking-[-0.02em] text-white tabular-nums">
           <NumberTicker value={activeRooms} />
-          <span className="ml-1.5 text-sm font-semibold text-white/40">/ {ROOMS.length}</span>
+          <span className="ml-1.5 text-sm font-semibold text-white/40">/ {rooms.length}</span>
         </p>
         <p className="mt-3 font-mono text-[10px] uppercase tracking-[1.5px] text-white/40">
           Intensidad prom. <span className="text-[#00d4cc]"><NumberTicker value={avg} />%</span>
