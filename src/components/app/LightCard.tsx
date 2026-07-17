@@ -96,15 +96,18 @@ export function LightCard({ light }: { light: Light }) {
   return (
     <div
       className={cn(
-        "rounded-xl border bg-[#141414] p-5 transition-all duration-300",
-        !light.on && "border-white/[0.08]",
+        "rounded-xl border bg-[#141414] p-4 transition-all duration-300 sm:p-5",
+        !light.on && "border-white/[0.08] hover:border-white/[0.14]",
       )}
       style={glowStyle}
     >
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-3">
           <span
-            className="flex h-9 w-9 items-center justify-center rounded-lg border transition-colors duration-300"
+            className={cn(
+              "flex h-9 w-9 items-center justify-center rounded-lg border transition-colors duration-300",
+              light.on && "lamp-pop",
+            )}
             style={
               light.on
                 ? { borderColor: hexA(glow, 0.5), background: hexA(glow, 0.14), color: "#f4f4f5" }

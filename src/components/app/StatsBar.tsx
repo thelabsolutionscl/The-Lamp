@@ -6,6 +6,7 @@ import { ROOMS } from "@/lib/lights"
 import { dailyKwh, costClp, formatCLP } from "@/lib/energy"
 import { useLights } from "@/components/app/lights-store"
 import { Sparkline } from "@/components/ui/sparkline"
+import { NumberTicker } from "@/components/ui/number-ticker"
 
 export function StatsBar() {
   const { lights, watts, history, tariff, setTariff } = useLights()
@@ -35,7 +36,7 @@ export function StatsBar() {
       <div className="rounded-xl border border-white/[0.08] bg-[#141414] p-5">
         <p className="font-mono text-[10px] uppercase tracking-[2px] text-white/45">Luces encendidas</p>
         <p className="mt-2 text-3xl font-bold tracking-[-0.02em] text-white tabular-nums">
-          {onCount}
+          <NumberTicker value={onCount} />
           <span className="ml-1.5 text-sm font-semibold text-white/40">/ {lights.length}</span>
         </p>
         <div className="mt-3 h-0.5 w-full overflow-hidden rounded-full bg-[#333]">
@@ -51,7 +52,7 @@ export function StatsBar() {
         <p className="font-mono text-[10px] uppercase tracking-[2px] text-white/45">Consumo estimado</p>
         <div className="flex items-end justify-between gap-2">
           <p className="mt-2 text-3xl font-bold tracking-[-0.02em] text-white tabular-nums">
-            {watts}
+            <NumberTicker value={watts} />
             <span className="ml-1.5 text-sm font-semibold text-white/40">W</span>
           </p>
           <Sparkline data={spark} className="mb-1 shrink-0" />
@@ -62,7 +63,7 @@ export function StatsBar() {
       <div className="rounded-xl border border-white/[0.08] bg-[#141414] p-5">
         <p className="font-mono text-[10px] uppercase tracking-[2px] text-white/45">Costo proyectado</p>
         <p className="mt-2 text-3xl font-bold tracking-[-0.02em] text-white tabular-nums">
-          {formatCLP(cost)}
+          <NumberTicker value={cost} format={formatCLP} />
           <span className="ml-1.5 text-sm font-semibold text-white/40">/ día</span>
         </p>
         <div className="mt-2.5 flex items-center gap-2">
@@ -102,11 +103,11 @@ export function StatsBar() {
       <div className="rounded-xl border border-white/[0.08] bg-[#141414] p-5">
         <p className="font-mono text-[10px] uppercase tracking-[2px] text-white/45">Ambientes activos</p>
         <p className="mt-2 text-3xl font-bold tracking-[-0.02em] text-white tabular-nums">
-          {activeRooms}
+          <NumberTicker value={activeRooms} />
           <span className="ml-1.5 text-sm font-semibold text-white/40">/ {ROOMS.length}</span>
         </p>
         <p className="mt-3 font-mono text-[10px] uppercase tracking-[1.5px] text-white/40">
-          Intensidad prom. <span className="text-[#00d4cc]">{avg}%</span>
+          Intensidad prom. <span className="text-[#00d4cc]"><NumberTicker value={avg} />%</span>
         </p>
       </div>
     </div>

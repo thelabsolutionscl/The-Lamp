@@ -41,7 +41,7 @@ export function Dashboard() {
   const onCount = lights.filter((l) => l.on).length
 
   return (
-    <div className="mx-auto w-full max-w-[1400px] px-6 pb-24 pt-28 lg:px-12 lg:pb-20">
+    <div className="mx-auto w-full max-w-[1400px] px-6 pb-24 pt-24 lg:px-12 lg:pb-20 lg:pt-28">
       {/* Encabezado */}
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
