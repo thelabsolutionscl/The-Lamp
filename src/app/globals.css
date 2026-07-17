@@ -6,7 +6,7 @@
    The Lamp — identidad visual heredada de web-thelab-solutions.
    Misma estética (oscuro + técnico, grilla blueprint, glows que respiran,
    DM Sans + Montserrat) pero con el acento en matiz neutro 50% blanco /
-   50% negro: #808080 reemplaza al teal #00d4cc de la web.
+   50% negro: #00d4cc reemplaza al teal #00d4cc de la web.
    ───────────────────────────────────────────────────────────────────────────── */
 
 @theme inline {
@@ -63,7 +63,7 @@
 }
 
 /* Tokens base = ecosistema The Lab (manda el dashboard), en monocromo.
-   Paleta: --black #0a0a0a · surfaces #111/#1a1a1a/#222 · accent #808080
+   Paleta: --black #0a0a0a · surfaces #111/#1a1a1a/#222 · accent #00d4cc
    (50% blanco + 50% negro) · text #f0f0f0/#888 · danger #ff4444 */
 .dark {
   --background: #0a0a0a;
@@ -72,18 +72,18 @@
   --card-foreground: #f0f0f0;
   --popover: #1a1a1a;
   --popover-foreground: #f0f0f0;
-  --primary: #808080;
+  --primary: #00d4cc;
   --primary-foreground: #0a0a0a;
   --secondary: #1a1a1a;
   --secondary-foreground: #f0f0f0;
   --muted: #1a1a1a;
   --muted-foreground: #888888;
-  --accent: #808080;
+  --accent: #00d4cc;
   --accent-foreground: #0a0a0a;
   --destructive: #ff4444;
   --border: #2a2a2a;
   --input: #333333;
-  --ring: #808080;
+  --ring: #00d4cc;
 }
 
 @layer base {
@@ -101,7 +101,7 @@
     font-family: var(--font-heading);
   }
   ::selection {
-    background-color: #80808066;
+    background-color: #00d4cc66;
     color: #f0f0f0;
   }
   ::-webkit-scrollbar {
@@ -151,7 +151,7 @@
   border: none;
   border-radius: 9999px;
   background: #f0f0f0;
-  box-shadow: 0 0 10px rgba(128, 128, 128, 0.9);
+  box-shadow: 0 0 10px rgba(0, 212, 204, 0.9);
   transition: transform 0.15s ease;
 }
 .lamp-range::-webkit-slider-thumb:hover {
@@ -163,10 +163,10 @@
   border: none;
   border-radius: 9999px;
   background: #f0f0f0;
-  box-shadow: 0 0 10px rgba(128, 128, 128, 0.9);
+  box-shadow: 0 0 10px rgba(0, 212, 204, 0.9);
 }
 .lamp-range:focus-visible {
-  box-shadow: 0 0 0 2px #0a0a0a, 0 0 0 4px rgba(128, 128, 128, 0.5);
+  box-shadow: 0 0 0 2px #0a0a0a, 0 0 0 4px rgba(0, 212, 204, 0.5);
 }
 .lamp-range:disabled {
   opacity: 0.35;
@@ -217,8 +217,8 @@
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(128, 128, 128, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(128, 128, 128, 0.05) 1px, transparent 1px);
+    linear-gradient(rgba(0, 212, 204, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 204, 0.05) 1px, transparent 1px);
   background-size: 40px 40px;
   animation: sl-grid-fade 3s ease-in-out infinite alternate;
 }
@@ -229,7 +229,7 @@
   width: 600px;
   height: 600px;
   margin: -300px 0 0 -300px;
-  background: radial-gradient(circle, rgba(128, 128, 128, 0.09) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(0, 212, 204, 0.09) 0%, transparent 70%);
   animation: sl-glow-pulse 2.5s ease-in-out infinite;
 }
 #site-loader .sl-content {
@@ -254,7 +254,7 @@
   font-family: ui-monospace, "JetBrains Mono", monospace;
   font-size: 10px;
   letter-spacing: 3px;
-  color: #9a9a9a;
+  color: #00d4cc;
   text-transform: uppercase;
 }
 #site-loader .sl-progress-wrap {
@@ -276,7 +276,7 @@
   color: #777;
 }
 #site-loader .sl-pct {
-  color: #b0b0b0;
+  color: #00d4cc;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
 }
@@ -288,9 +288,9 @@
 }
 #site-loader .sl-progress-bar {
   height: 100%;
-  background: linear-gradient(90deg, #6e6e6e, #9a9a9a);
+  background: linear-gradient(90deg, #00d4aa, #00d4cc);
   border-radius: 2px;
-  box-shadow: 0 0 8px #808080;
+  box-shadow: 0 0 8px #00d4cc;
   transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 #site-loader .sl-dots {
@@ -316,10 +316,10 @@
   50% { transform: scale(1.1); opacity: 1; }
 }
 @keyframes sl-logo-breathe {
-  0%, 100% { filter: brightness(0.85) drop-shadow(0 0 8px rgba(128, 128, 128, 0.35)); }
-  50% { filter: brightness(1.15) drop-shadow(0 0 22px rgba(128, 128, 128, 0.75)); }
+  0%, 100% { filter: brightness(0.85) drop-shadow(0 0 8px rgba(0, 212, 204, 0.35)); }
+  50% { filter: brightness(1.15) drop-shadow(0 0 22px rgba(0, 212, 204, 0.75)); }
 }
 @keyframes sl-dot-pop {
   0%, 100% { transform: scale(1); background: #333; }
-  50% { transform: scale(1.8); background: #808080; box-shadow: 0 0 6px #808080; }
+  50% { transform: scale(1.8); background: #00d4cc; box-shadow: 0 0 6px #00d4cc; }
 }

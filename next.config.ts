@@ -23,3 +23,7 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+
+// Habilita el runtime de Cloudflare Workers en `next dev` para probar en local
+// lo mismo que se despliega (OpenNext). No afecta a `next build`/`next start`.
+import("@opennextjs/cloudflare").then((m) => m.initOpenNextCloudflareForDev());

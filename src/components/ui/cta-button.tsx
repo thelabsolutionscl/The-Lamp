@@ -20,7 +20,7 @@ interface CtaButtonProps {
 /**
  * Botón CTA animado: hover lift, sombra glow, barrido de brillo y flecha
  * opcional. Idéntico al de la web de The Lab Solutions, con el acento en
- * gris 50% (#808080) en vez de teal. Respeta prefers-reduced-motion.
+ * gris 50% (#00d4cc) en vez de teal. Respeta prefers-reduced-motion.
  * Server Component puro — usa <Link> en rutas internas, <a> en el resto.
  */
 export function CtaButton({
@@ -35,7 +35,7 @@ export function CtaButton({
   ...rest
 }: CtaButtonProps) {
   const base =
-    "group/cta relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-lg font-semibold transition-all duration-200 ease-out active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#808080]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0a] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+    "group/cta relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-lg font-semibold transition-all duration-200 ease-out active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00d4cc]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0a] motion-reduce:transition-none motion-reduce:hover:translate-y-0"
 
   const sizes = {
     md: "px-6 py-3 text-sm",
@@ -44,7 +44,7 @@ export function CtaButton({
 
   const variants = {
     primary:
-      "bg-[#808080] text-[#0a0a0a] shadow-[0_4px_22px_-6px_#8080808c] hover:-translate-y-0.5 hover:bg-[#999999] hover:shadow-[0_14px_40px_-8px_#808080b3]",
+      "bg-[#00d4cc] text-[#0a0a0a] shadow-[0_4px_22px_-6px_#00d4cc8c] hover:-translate-y-0.5 hover:bg-[#19ddd5] hover:shadow-[0_14px_40px_-8px_#00d4ccb3]",
     secondary:
       "border border-white/[0.14] text-white/70 hover:-translate-y-0.5 hover:border-white/30 hover:bg-white/[0.04] hover:text-white",
   }

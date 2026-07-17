@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils"
 
 // Marca oficial de The Lamp: ampolleta inclinada (trazo blanco, casquillo
-// azul) + wordmark "THE LAMP" en Montserrat extra bold. El azul del casquillo
-// es la única excepción cromática a la paleta monocroma de la app.
+// cyan #00d4cc, el acento de marca) + wordmark "THE LAMP" en Montserrat extra
+// bold.
 export function LampMark({ className }: { className?: string }) {
   return (
     <svg viewBox="-1 -1 26 26" fill="none" className={className} aria-hidden="true">
@@ -22,8 +22,8 @@ export function LampMark({ className }: { className?: string }) {
           strokeLinecap="round"
         />
         {/* Casquillo azul */}
-        <path d="M9.7 18.9h4.6" stroke="#3FA9F5" strokeWidth="1.9" strokeLinecap="round" />
-        <path d="M10.2 21.3h3.6" stroke="#3FA9F5" strokeWidth="1.9" strokeLinecap="round" />
+        <path d="M9.7 18.9h4.6" stroke="#00d4cc" strokeWidth="1.9" strokeLinecap="round" />
+        <path d="M10.2 21.3h3.6" stroke="#00d4cc" strokeWidth="1.9" strokeLinecap="round" />
       </g>
     </svg>
   )

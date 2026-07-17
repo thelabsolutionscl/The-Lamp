@@ -58,7 +58,7 @@ export function Navbar() {
     >
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center" onClick={closeMobile}>
-          <LampLogo textClassName="text-sm md:text-base" />
+          <LampLogo iconClassName="h-12 w-12" textClassName="text-lg md:text-xl" />
         </Link>
 
         {/* Navegación de escritorio — slide-tabs */}
@@ -71,7 +71,7 @@ export function Navbar() {
           {/* Pill deslizante */}
           <span
             aria-hidden
-            className="pointer-events-none absolute top-1/2 h-9 -translate-y-1/2 rounded-full border border-[#808080]/25 bg-[#808080]/[0.12] shadow-[0_0_18px_-6px_rgba(128,128,128,0.6)] transition-all duration-300 ease-out"
+            className="pointer-events-none absolute top-1/2 h-9 -translate-y-1/2 rounded-full border border-[#00d4cc]/25 bg-[#00d4cc]/[0.12] shadow-[0_0_18px_-6px_rgba(0,212,204,0.6)] transition-all duration-300 ease-out"
             style={{ left: cursor.left, width: cursor.width, opacity: cursor.opacity }}
           />
 
@@ -95,8 +95,8 @@ export function Navbar() {
         {/* Estado del sistema (micro-tipografía de la identidad) */}
         <span className="hidden lg:inline-flex items-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.03] px-3.5 py-1.5 font-mono text-[10px] uppercase tracking-[2.5px] text-white/60">
           <span className="relative flex h-1.5 w-1.5">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#808080] opacity-75" />
-            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#808080]" />
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#00d4cc] opacity-75" />
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#00d4cc]" />
           </span>
           En línea
         </span>

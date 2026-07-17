@@ -109,7 +109,7 @@ export function SiteLoader() {
       <div className="sl-content">
         <div className="sl-logo-wrap">
           <span className="sl-logo">
-            <LampLogo iconClassName="h-7 w-7" textClassName="text-xl" />
+            <LampLogo iconClassName="h-11 w-11" textClassName="text-2xl md:text-3xl" />
           </span>
           <span className="sl-subtitle">Control de iluminación</span>
         </div>

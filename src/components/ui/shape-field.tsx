@@ -19,11 +19,11 @@ type Shape = {
 }
 
 const SHAPES: Shape[] = [
-  { w: 460, h: 120, grad: "rgba(128,128,128,0.35)", rot: 12, dur: "11s", delay: "0s", pos: { top: "14%", left: "-4%" } },
+  { w: 460, h: 120, grad: "rgba(0,212,204,0.35)", rot: 12, dur: "11s", delay: "0s", pos: { top: "14%", left: "-4%" } },
   { w: 380, h: 100, grad: "rgba(200,200,200,0.22)", rot: -15, dur: "13s", delay: "0.6s", pos: { top: "56%", right: "-3%" } },
   { w: 250, h: 78, grad: "rgba(160,160,160,0.3)", rot: -8, dur: "12s", delay: "1.1s", pos: { bottom: "8%", left: "6%" } },
-  { w: 180, h: 58, grad: "rgba(128,128,128,0.3)", rot: 20, dur: "10s", delay: "0.3s", pos: { top: "12%", right: "13%" } },
-  { w: 140, h: 46, grad: "rgba(128,128,128,0.24)", rot: 28, dur: "14s", delay: "1.6s", pos: { top: "70%", left: "22%" } },
+  { w: 180, h: 58, grad: "rgba(0,212,204,0.3)", rot: 20, dur: "10s", delay: "0.3s", pos: { top: "12%", right: "13%" } },
+  { w: 140, h: 46, grad: "rgba(0,212,204,0.24)", rot: 28, dur: "14s", delay: "1.6s", pos: { top: "70%", left: "22%" } },
 ]
 
 export function ShapeField({

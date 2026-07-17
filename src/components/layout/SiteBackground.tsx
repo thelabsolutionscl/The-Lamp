@@ -1,7 +1,7 @@
 // Fondo global del sitio: capa fija detrás de todo el contenido.
 // Estética de marca: oscuro + técnico (grilla "blueprint") + glows muy tenues
 // que "respiran". Idéntico al de la web de The Lab Solutions, con los glows en
-// gris 50% (#808080) en vez de teal. Animación ligera (transform/opacity).
+// gris 50% (#00d4cc) en vez de teal. Animación ligera (transform/opacity).
 //
 // - aria-hidden + pointer-events-none: puramente decorativo.
 // - Opacidades bajas para no afectar el contraste AA del texto.
@@ -31,7 +31,7 @@ export function SiteBackground() {
       <div
         className="absolute left-[-12%] top-[-8%] h-[60vh] w-[60vh] rounded-full"
         style={{
-          background: "radial-gradient(circle, rgba(128,128,128,0.12), transparent 68%)",
+          background: "radial-gradient(circle, rgba(0,212,204,0.12), transparent 68%)",
           filter: "blur(32px)",
           animation: "glow-breathe-a 24s ease-in-out infinite",
         }}
@@ -41,7 +41,7 @@ export function SiteBackground() {
       <div
         className="absolute right-[-10%] top-[40%] h-[55vh] w-[55vh] rounded-full"
         style={{
-          background: "radial-gradient(circle, rgba(128,128,128,0.09), transparent 70%)",
+          background: "radial-gradient(circle, rgba(0,212,204,0.09), transparent 70%)",
           filter: "blur(42px)",
           animation: "glow-breathe-b 31s ease-in-out infinite",
         }}

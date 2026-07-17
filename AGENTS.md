@@ -14,8 +14,15 @@ marketing: es una herramienta.
 
 The Lamp hereda la identidad visual de `web-thelab-solutions` (oscuro + técnico:
 fondo `#0a0a0a`, superficies `#111/#1a1a1a`, grilla blueprint, glows que
-respiran, DM Sans + Montserrat, System Loader con porcentaje) con una regla:
-**el acento es siempre gris 50%** (`#808080` = 50% blanco + 50% negro) donde la
-web usa teal `#00d4cc`. No introducir colores con saturación; la paleta de la
-app es 100% monocroma. Únicas excepciones: `--destructive` para errores y el
-azul `#3FA9F5` del casquillo del logo oficial (solo en la marca, nunca en UI).
+respiran, DM Sans + Montserrat, System Loader con porcentaje) **incluido su
+acento cyan/teal de marca `#00d4cc`** (variantes: hover `#19ddd5`, glows
+`rgba(0,212,204,α)`, gradiente de barras `#00d4aa → #00d4cc`).
+
+Regla de uso del acento: base oscura y neutra; el cyan entra como **toque** en
+lo vivo/activo/interactivo (switch encendido, relleno del slider, glow de luz
+encendida, icon-box "lit", punto "En línea", barra de stats, pill del navbar,
+System Loader, focus rings, `::selection`) y en la atmósfera (glows del fondo).
+Lo estructural/inactivo (bordes, superficies, eyebrows, texto muted) se queda
+en gris neutro. El logo también usa el cyan de marca en el casquillo de la
+ampolleta. No sumar otros colores saturados; única excepción cromática extra:
+`--destructive` para errores.

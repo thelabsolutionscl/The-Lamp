@@ -5,6 +5,9 @@ import { Navbar } from "@/components/layout/Navbar"
 import { SiteBackground } from "@/components/layout/SiteBackground"
 import { SiteLoader } from "@/components/layout/SiteLoader"
 import { Footer } from "@/components/layout/Footer"
+import { LightsProvider } from "@/components/app/lights-store"
+import { Toaster } from "@/components/app/Toaster"
+import { MobileQuickBar } from "@/components/app/MobileQuickBar"
 
 // Mismas fuentes y pesos que la web de The Lab Solutions.
 const dmSans = DM_Sans({
@@ -28,7 +31,10 @@ export const metadata: Metadata = {
     template: "%s · The Lamp",
   },
   description:
-    "The Lamp: app de domótica para controlar las luces de tu casa. Identidad visual de The Lab Solutions en matiz 50% blanco y 50% negro.",
+    "The Lamp: app de domótica para controlar las luces de tu casa (escenas, ambientes, intensidad, temperatura de color). Identidad visual de The Lab Solutions.",
+  applicationName: "The Lamp",
+  appleWebApp: { capable: true, statusBarStyle: "black-translucent", title: "The Lamp" },
+  manifest: "/manifest.webmanifest",
   authors: [{ name: "The Lab Solutions" }],
   creator: "The Lab Solutions",
   // La app aún no se lanza públicamente: sin indexar hasta tener dominio y
@@ -64,15 +70,19 @@ export default function RootLayout({
         <SiteBackground />
         <a
           href="#contenido"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-[#808080] focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-[#0a0a0a]"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-[#00d4cc] focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-[#0a0a0a]"
         >
           Saltar al contenido
         </a>
-        <Navbar />
-        <main id="contenido" className="flex flex-col flex-1">
-          {children}
-        </main>
-        <Footer />
+        <LightsProvider>
+          <Navbar />
+          <main id="contenido" className="flex flex-col flex-1">
+            {children}
+          </main>
+          <Footer />
+          <Toaster />
+          <MobileQuickBar />
+        </LightsProvider>
       </body>
     </html>
   )

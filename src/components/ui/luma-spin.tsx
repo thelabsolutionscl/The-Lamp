@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils"
 // ─────────────────────────────────────────────────────────────────────────────
 // <LumaSpin> — loader "luma": dos figuras redondeadas que recorren las esquinas
 // de un cuadro, creando un giro/pliegue continuo. Mismo componente que la web
-// de The Lab Solutions, adaptado a The Lamp: una figura en gris 50% (#808080)
+// de The Lab Solutions, adaptado a The Lamp: una figura en gris 50% (#00d4cc)
 // y la otra en blanco. CSS puro, sin dependencias.
 // Respeta prefers-reduced-motion. Accesible (role=status).
 // ─────────────────────────────────────────────────────────────────────────────
@@ -25,7 +25,7 @@ type LumaSpinProps = {
 
 export function LumaSpin({
   size = 44,
-  color = "#808080",
+  color = "#00d4cc",
   color2 = "#f4f4f5",
   stroke = 3,
   className,
