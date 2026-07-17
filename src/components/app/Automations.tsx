@@ -141,7 +141,7 @@ export function Automations() {
         {automations.map((a) => {
           const TIcon = TRIGGER_ICON[a.trigger.type]
           return (
-            <div key={a.id} className={cn("group/au flex items-center gap-4 rounded-xl border bg-[#141414] p-4 transition-colors", a.enabled ? "border-white/[0.1]" : "border-white/[0.05] opacity-60")}>
+            <div key={a.id} className={cn("group/au flex items-center gap-2.5 rounded-xl border bg-[#141414] p-3.5 transition-colors sm:gap-3 sm:p-4", a.enabled ? "border-white/[0.1]" : "border-white/[0.05] opacity-60")}>
               <span className={cn("flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border", a.enabled ? "border-[#00d4cc]/40 bg-[#00d4cc]/12 text-[#00d4cc]" : "border-white/[0.08] bg-white/[0.02] text-white/35")}>
                 <TIcon className="h-4.5 w-4.5" aria-hidden />
               </span>
@@ -151,7 +151,7 @@ export function Automations() {
                   {describeTrigger(a.trigger, sunTimes)} · {describeAction(a.action, sceneName, roomName)} · {describeDays(a)}
                 </p>
               </div>
-              <button type="button" onClick={() => startEdit(a)} aria-label={`Editar ${a.name}`} className="flex h-8 w-8 items-center justify-center rounded-lg text-white/30 opacity-0 transition-all hover:bg-white/[0.05] hover:text-white/70 focus-visible:opacity-100 group-hover/au:opacity-100">
+              <button type="button" onClick={() => startEdit(a)} aria-label={`Editar ${a.name}`} className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-white/30 opacity-100 transition-all hover:bg-white/[0.05] hover:text-white/70 focus-visible:opacity-100 lg:opacity-0 lg:group-hover/au:opacity-100">
                 <Pencil className="h-4 w-4" />
               </button>
               <LampSwitch on={a.enabled} onChange={(on) => toggleAutomation(a.id, on)} label={`${a.enabled ? "Desactivar" : "Activar"} ${a.name}`} />

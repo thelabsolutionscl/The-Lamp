@@ -54,8 +54,11 @@ export function StatsBar() {
             <NumberTicker value={watts} />
             <span className="ml-1.5 text-sm font-semibold text-white/40">W</span>
           </p>
-          <Sparkline data={spark} className="mb-1 shrink-0" />
+          {/* Desktop: al lado del número. */}
+          <Sparkline data={spark} className="mb-1 hidden shrink-0 sm:block" />
         </div>
+        {/* Móvil / cards angostas: debajo, a todo el ancho. */}
+        <Sparkline data={spark} responsive className="mt-3 block h-8 w-full sm:hidden" />
       </div>
 
       {/* Costo proyectado + tarifa editable */}

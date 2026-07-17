@@ -151,7 +151,7 @@ export function LightCard({ light }: { light: Light }) {
             ) : (
               <p className={cn("flex items-center gap-1.5 text-sm font-medium transition-colors", light.on ? "text-white/90" : "text-white/50")}>
                 {light.name}
-                <span className="inline-flex items-center gap-1 opacity-0 transition-opacity focus-within:opacity-100 group-hover/lc:opacity-100">
+                <span className="inline-flex items-center gap-1 opacity-100 transition-opacity focus-within:opacity-100 lg:opacity-0 lg:group-hover/lc:opacity-100">
                   <button
                     type="button"
                     onClick={() => { setDraft(light.name); setRenaming(true) }}

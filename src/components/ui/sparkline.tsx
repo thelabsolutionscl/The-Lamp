@@ -8,16 +8,21 @@ export function Sparkline({
   height = 34,
   stroke = "#00d4cc",
   className,
+  responsive = false,
 }: {
   data: number[]
   width?: number
   height?: number
   stroke?: string
   className?: string
+  /** Si true, el SVG llena el ancho del contenedor (para móvil / cards angostas). */
+  responsive?: boolean
 }) {
   const gid = useId()
+  // En modo responsivo el ancho lo pone el contenedor (CSS), no el atributo.
+  const svgW = responsive ? "100%" : width
   if (data.length < 2) {
-    return <svg width={width} height={height} className={className} aria-hidden />
+    return <svg width={svgW} height={height} className={className} aria-hidden />
   }
   const max = Math.max(...data, 1)
   const min = Math.min(...data, 0)
@@ -35,7 +40,14 @@ export function Sparkline({
   const [ex, ey] = pts[pts.length - 1]
 
   return (
-    <svg width={width} height={height} className={className} aria-hidden viewBox={`0 0 ${width} ${height}`}>
+    <svg
+      width={svgW}
+      height={height}
+      className={className}
+      aria-hidden
+      viewBox={`0 0 ${width} ${height}`}
+      preserveAspectRatio={responsive ? "none" : "xMidYMid meet"}
+    >
       <defs>
         <linearGradient id={`spark-${gid}`} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor={stroke} stopOpacity="0.28" />
@@ -43,7 +55,7 @@ export function Sparkline({
         </linearGradient>
       </defs>
       <path d={area} fill={`url(#spark-${gid})`} />
-      <path d={line} fill="none" stroke={stroke} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d={line} fill="none" stroke={stroke} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
       <circle cx={ex} cy={ey} r="2.2" fill={stroke} />
     </svg>
   )

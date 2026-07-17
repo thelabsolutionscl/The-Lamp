@@ -91,7 +91,7 @@ function RoomSection({ room }: { room: Room }) {
           ) : (
             <h3 className="flex items-center gap-2 text-lg font-bold tracking-[-0.01em] text-white">
               {room.name}
-              <button type="button" onClick={() => { setName(room.name); setRenaming(true) }} aria-label={`Renombrar ${room.name}`} className="text-white/25 opacity-0 transition-opacity hover:text-white/60 focus-visible:opacity-100 group-hover/rh:opacity-100">
+              <button type="button" onClick={() => { setName(room.name); setRenaming(true) }} aria-label={`Renombrar ${room.name}`} className="text-white/25 opacity-100 transition-opacity hover:text-white/60 focus-visible:opacity-100 lg:opacity-0 lg:group-hover/rh:opacity-100">
                 <Pencil className="h-3.5 w-3.5" />
               </button>
             </h3>
