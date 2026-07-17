@@ -17,5 +17,5 @@ fondo `#0a0a0a`, superficies `#111/#1a1a1a`, grilla blueprint, glows que
 respiran, DM Sans + Montserrat, System Loader con porcentaje) con una regla:
 **el acento es siempre gris 50%** (`#808080` = 50% blanco + 50% negro) donde la
 web usa teal `#00d4cc`. No introducir colores con saturación; la paleta de la
-app es 100% monocroma (el único color permitido es `--destructive` para
-errores).
+app es 100% monocroma. Únicas excepciones: `--destructive` para errores y el
+azul `#3FA9F5` del casquillo del logo oficial (solo en la marca, nunca en UI).

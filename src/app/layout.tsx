@@ -17,7 +17,8 @@ const dmSans = DM_Sans({
 const montserrat = Montserrat({
   variable: "--font-montserrat",
   subsets: ["latin"],
-  weight: ["600", "700"],
+  // 800 = peso del wordmark del logo.
+  weight: ["600", "700", "800"],
   display: "swap",
 })
 
