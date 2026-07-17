@@ -23,11 +23,11 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   title: {
-    default: "The Lamp · La app de The Lab Solutions",
+    default: "The Lamp · Control de iluminación",
     template: "%s · The Lamp",
   },
   description:
-    "The Lamp: la app del ecosistema The Lab Solutions. Misma identidad visual de la marca, en matiz 50% blanco y 50% negro.",
+    "The Lamp: app de domótica para controlar las luces de tu casa. Identidad visual de The Lab Solutions en matiz 50% blanco y 50% negro.",
   authors: [{ name: "The Lab Solutions" }],
   creator: "The Lab Solutions",
   // La app aún no se lanza públicamente: sin indexar hasta tener dominio y

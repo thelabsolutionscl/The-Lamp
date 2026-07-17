@@ -2,6 +2,14 @@
 
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
 
+# Qué es The Lamp
+
+App de domótica para controlar la iluminación de la casa: escenas, ambientes y
+luces individuales (switch + intensidad). La v0 simula los dispositivos en el
+cliente; el modelo vive en `src/lib/lights.ts` y es el punto de enchufe para un
+puente real (Home Assistant, Tuya, Hue, etc.). No convertir esto en un sitio de
+marketing: es una herramienta.
+
 # Identidad visual
 
 The Lamp hereda la identidad visual de `web-thelab-solutions` (oscuro + técnico:

@@ -132,6 +132,54 @@
   }
 }
 
+/* ── Slider de intensidad (identidad: track fino como la barra del loader,
+      thumb claro con glow gris 50%) ── */
+.lamp-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 3px;
+  border-radius: 2px;
+  background: #333333;
+  cursor: pointer;
+  outline: none;
+}
+.lamp-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border: none;
+  border-radius: 9999px;
+  background: #f0f0f0;
+  box-shadow: 0 0 10px rgba(128, 128, 128, 0.9);
+  transition: transform 0.15s ease;
+}
+.lamp-range::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+.lamp-range::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border: none;
+  border-radius: 9999px;
+  background: #f0f0f0;
+  box-shadow: 0 0 10px rgba(128, 128, 128, 0.9);
+}
+.lamp-range:focus-visible {
+  box-shadow: 0 0 0 2px #0a0a0a, 0 0 0 4px rgba(128, 128, 128, 0.5);
+}
+.lamp-range:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.lamp-range:disabled::-webkit-slider-thumb {
+  box-shadow: none;
+  transform: none;
+}
+.lamp-range:disabled::-moz-range-thumb {
+  box-shadow: none;
+}
+
 /* Fondo global sutil: grilla "blueprint" que deriva y glows grises que respiran.
    El reset de prefers-reduced-motion los deja estáticos automáticamente. */
 @keyframes grid-drift {

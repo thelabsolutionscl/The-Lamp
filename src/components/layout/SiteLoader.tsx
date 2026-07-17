@@ -111,7 +111,7 @@ export function SiteLoader() {
           <span className="sl-logo">
             <LampLogo iconClassName="h-7 w-7" textClassName="text-xl" />
           </span>
-          <span className="sl-subtitle">Sistema The Lab</span>
+          <span className="sl-subtitle">Control de iluminación</span>
         </div>
         <div className="sl-progress-wrap">
           <div className="sl-progress-head">
