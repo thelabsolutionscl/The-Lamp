@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="7" fill="#0a0a0a"/>
+  <!-- Haz de luz (gris 50%, translúcido) -->
+  <path d="M11 14 L6.5 26 H25.5 L21 14 Z" fill="rgba(128,128,128,0.22)"/>
+  <!-- Lámpara: pantalla + vástago + base -->
+  <path d="M10.5 8 H21.5 L18.5 14 H13.5 Z" fill="#808080"/>
+  <line x1="16" y1="14" x2="16" y2="23" stroke="#f0f0f0" stroke-width="1.8" stroke-linecap="round"/>
+  <line x1="11" y1="23.5" x2="21" y2="23.5" stroke="#f0f0f0" stroke-width="1.8" stroke-linecap="round"/>
+</svg>

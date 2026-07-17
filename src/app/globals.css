@@ -1,0 +1,277 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   The Lamp — identidad visual heredada de web-thelab-solutions.
+   Misma estética (oscuro + técnico, grilla blueprint, glows que respiran,
+   DM Sans + Montserrat) pero con el acento en matiz neutro 50% blanco /
+   50% negro: #808080 reemplaza al teal #00d4cc de la web.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-dm-sans);
+  --font-mono: var(--font-dm-sans);
+  --font-heading: var(--font-montserrat);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --radius: 0.625rem;
+}
+
+/* Tokens base = ecosistema The Lab (manda el dashboard), en monocromo.
+   Paleta: --black #0a0a0a · surfaces #111/#1a1a1a/#222 · accent #808080
+   (50% blanco + 50% negro) · text #f0f0f0/#888 · danger #ff4444 */
+.dark {
+  --background: #0a0a0a;
+  --foreground: #f0f0f0;
+  --card: #1a1a1a;
+  --card-foreground: #f0f0f0;
+  --popover: #1a1a1a;
+  --popover-foreground: #f0f0f0;
+  --primary: #808080;
+  --primary-foreground: #0a0a0a;
+  --secondary: #1a1a1a;
+  --secondary-foreground: #f0f0f0;
+  --muted: #1a1a1a;
+  --muted-foreground: #888888;
+  --accent: #808080;
+  --accent-foreground: #0a0a0a;
+  --destructive: #ff4444;
+  --border: #2a2a2a;
+  --input: #333333;
+  --ring: #808080;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+  }
+  ::selection {
+    background-color: #80808066;
+    color: #f0f0f0;
+  }
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: oklch(1 0 0 / 12%);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: oklch(1 0 0 / 20%);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* Fondo global sutil: grilla "blueprint" que deriva y glows grises que respiran.
+   El reset de prefers-reduced-motion los deja estáticos automáticamente. */
+@keyframes grid-drift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(64px, 64px, 0); }
+}
+@keyframes glow-breathe-a {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.55; }
+  50% { transform: translate3d(6%, 4%, 0) scale(1.12); opacity: 0.9; }
+}
+@keyframes glow-breathe-b {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1.05); opacity: 0.4; }
+  50% { transform: translate3d(-5%, -6%, 0) scale(0.95); opacity: 0.72; }
+}
+
+/* ── Pantalla de carga con porcentaje (homogénea con el System Loader del
+      ecosistema; acento en gris 50%) ── */
+#site-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: #0a0a0a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+#site-loader.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+#site-loader .sl-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(128, 128, 128, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(128, 128, 128, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: sl-grid-fade 3s ease-in-out infinite alternate;
+}
+#site-loader .sl-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 600px;
+  height: 600px;
+  margin: -300px 0 0 -300px;
+  background: radial-gradient(circle, rgba(128, 128, 128, 0.09) 0%, transparent 70%);
+  animation: sl-glow-pulse 2.5s ease-in-out infinite;
+}
+#site-loader .sl-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  padding: 0 24px;
+}
+#site-loader .sl-logo-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+#site-loader .sl-logo {
+  animation: sl-logo-breathe 2.5s ease-in-out infinite;
+}
+#site-loader .sl-subtitle {
+  font-family: ui-monospace, "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: #9a9a9a;
+  text-transform: uppercase;
+}
+#site-loader .sl-progress-wrap {
+  width: 280px;
+  max-width: 78vw;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+#site-loader .sl-progress-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  font-family: ui-monospace, "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+#site-loader .sl-status {
+  color: #777;
+}
+#site-loader .sl-pct {
+  color: #b0b0b0;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+#site-loader .sl-progress-track {
+  height: 2px;
+  background: #333;
+  border-radius: 2px;
+  overflow: hidden;
+}
+#site-loader .sl-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #6e6e6e, #9a9a9a);
+  border-radius: 2px;
+  box-shadow: 0 0 8px #808080;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+#site-loader .sl-dots {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+}
+#site-loader .sl-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #333;
+}
+#site-loader .sl-dot:nth-child(1) { animation: sl-dot-pop 1.2s 0s ease-in-out infinite; }
+#site-loader .sl-dot:nth-child(2) { animation: sl-dot-pop 1.2s 0.2s ease-in-out infinite; }
+#site-loader .sl-dot:nth-child(3) { animation: sl-dot-pop 1.2s 0.4s ease-in-out infinite; }
+@keyframes sl-grid-fade {
+  0% { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+@keyframes sl-glow-pulse {
+  0%, 100% { transform: scale(0.9); opacity: 0.6; }
+  50% { transform: scale(1.1); opacity: 1; }
+}
+@keyframes sl-logo-breathe {
+  0%, 100% { filter: brightness(0.85) drop-shadow(0 0 8px rgba(128, 128, 128, 0.35)); }
+  50% { filter: brightness(1.15) drop-shadow(0 0 22px rgba(128, 128, 128, 0.75)); }
+}
+@keyframes sl-dot-pop {
+  0%, 100% { transform: scale(1); background: #333; }
+  50% { transform: scale(1.8); background: #808080; box-shadow: 0 0 6px #808080; }
+}
