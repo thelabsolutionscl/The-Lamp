@@ -6,6 +6,7 @@
 
 import { SEED_LIGHTS, type Light, type LightKind } from "@/lib/lights"
 import { loadBridgeConfig } from "@/lib/config"
+import { loadDeviceConfigs, resolveRequests } from "@/lib/devices"
 
 export interface LightBridge {
   /** Nombre legible del puente (se muestra en la UI). */
@@ -170,6 +171,35 @@ export class HomeAssistantBridge implements LightBridge {
   }
 }
 
+// ── Genérico (HTTP / Webhook) ────────────────────────────────────────────────
+// Estado local (como el mock) + dispara peticiones reales al backend por cada
+// cambio, según los endpoints configurados por luz (ver src/lib/devices.ts).
+export class WebhookBridge implements LightBridge {
+  readonly name = "Genérico (HTTP)"
+  private mock = new MockBridge()
+
+  load(): Promise<Light[]> {
+    return this.mock.load()
+  }
+  persist(lights: Light[]): Promise<void> {
+    return this.mock.persist(lights)
+  }
+  async apply(id: string, changes: Partial<Light>): Promise<void> {
+    const cfg = loadDeviceConfigs()[id]
+    const requests = resolveRequests(cfg, changes)
+    if (requests.length === 0) return
+    try {
+      await fetch("/api/device", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ requests }),
+      })
+    } catch {
+      /* el backend no respondió; el estado local ya cambió */
+    }
+  }
+}
+
 // ── Selección del puente ─────────────────────────────────────────────────────
 let bridge: LightBridge | null = null
 
@@ -178,6 +208,8 @@ export function getBridge(): LightBridge {
   const cfg = loadBridgeConfig()
   if (cfg.kind === "homeassistant" && cfg.haUrl && cfg.haToken) {
     bridge = new HomeAssistantBridge(cfg.haUrl, cfg.haToken)
+  } else if (cfg.kind === "webhook") {
+    bridge = new WebhookBridge()
   } else {
     bridge = new MockBridge()
   }

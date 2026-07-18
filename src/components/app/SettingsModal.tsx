@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { X, Check, Loader2, Cpu, Server } from "lucide-react"
+import { X, Check, Loader2, Cpu, Server, Webhook } from "lucide-react"
 import { loadBridgeConfig, saveBridgeConfig, type BridgeKind } from "@/lib/config"
 import { resetBridge } from "@/lib/bridge"
 import { useLights } from "@/components/app/lights-store"
@@ -91,9 +91,10 @@ function SettingsDialog({ onClose }: { onClose: () => void }) {
 
         <div className="max-h-[70vh] overflow-y-auto px-6 py-5">
           <p className="font-mono text-[10px] uppercase tracking-[2px] text-white/40">Puente de dispositivos</p>
-          <div className="mt-3 grid grid-cols-2 gap-3">
+          <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-3">
             {([
               { k: "mock" as const, icon: Cpu, title: "Simulado", desc: "Estado local (v0)" },
+              { k: "webhook" as const, icon: Webhook, title: "Genérico", desc: "HTTP / Webhook" },
               { k: "homeassistant" as const, icon: Server, title: "Home Assistant", desc: "Luces reales" },
             ]).map(({ k, icon: Icon, title, desc }) => (
               <button key={k} type="button" onClick={() => setKind(k)} aria-pressed={kind === k}
@@ -104,6 +105,12 @@ function SettingsDialog({ onClose }: { onClose: () => void }) {
               </button>
             ))}
           </div>
+
+          {kind === "webhook" && (
+            <p className="mt-4 rounded-lg border border-white/[0.08] bg-white/[0.02] p-3 text-[11px] leading-relaxed text-white/50">
+              Controla cualquier dispositivo con API HTTP — Shelly, Tasmota, un webhook de Home Assistant, Node-RED, IFTTT o un proxy a la nube de tu marca. Configura los endpoints de cada luz desde su tarjeta (ícono de enchufe 🔌). Las peticiones salen por el backend de la app, así que no hay problemas de CORS ni de red.
+            </p>
+          )}
 
           {kind === "homeassistant" && (
             <div className="mt-5 flex flex-col gap-3">

@@ -2,7 +2,7 @@
 // getBridge() para decidir contra qué hablar, y el panel de Ajustes para
 // editarla.
 
-export type BridgeKind = "mock" | "homeassistant"
+export type BridgeKind = "mock" | "homeassistant" | "webhook"
 
 export type BridgeConfig = {
   kind: BridgeKind
@@ -18,7 +18,7 @@ export function loadBridgeConfig(): BridgeConfig {
     const raw = localStorage.getItem(KEY)
     if (raw) {
       const c = JSON.parse(raw) as BridgeConfig
-      if (c && (c.kind === "mock" || c.kind === "homeassistant")) return c
+      if (c && (c.kind === "mock" || c.kind === "homeassistant" || c.kind === "webhook")) return c
     }
   } catch {
     /* ignora */

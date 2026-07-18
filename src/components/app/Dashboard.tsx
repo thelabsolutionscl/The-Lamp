@@ -152,7 +152,10 @@ export function Dashboard() {
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#00d4cc] opacity-75" />
             <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#00d4cc]" />
           </span>
-          {bridgeName} · {onCount > 0 ? `${onCount} en línea` : "Todo apagado"}
+          {/* bridgeName depende de localStorage (cliente): se muestra tras
+              hidratar para no romper la hidratación SSR. */}
+          {hydrated ? `${bridgeName} · ` : ""}
+          {onCount > 0 ? `${onCount} en línea` : "Todo apagado"}
         </p>
       </div>
 

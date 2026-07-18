@@ -30,6 +30,7 @@ import {
   addLight as addLightArr,
 } from "@/lib/mutations"
 import { getBridge } from "@/lib/bridge"
+import { loadBridgeConfig, type BridgeKind } from "@/lib/config"
 import { SEED_AUTOMATIONS, isDue, triggerFireMinute, minutesOfDay, type Automation, type AutomationAction } from "@/lib/automations"
 import { sunTimesLocal } from "@/lib/sun"
 import { seedHistory, pushSample, DEFAULT_TARIFF_CLP, type EnergySample } from "@/lib/energy"
@@ -39,6 +40,7 @@ export type Toast = { id: number; msg: string; actionLabel?: string; onAction?: 
 type Ctx = {
   hydrated: boolean
   bridgeName: string
+  bridgeKind: BridgeKind
   lights: Light[]
   rooms: Room[]
   scenes: Scene[]
@@ -99,6 +101,7 @@ export function LightsProvider({ children }: { children: React.ReactNode }) {
   const rooms = useMemo<Room[]>(() => deriveRooms(lights, roomNames), [lights, roomNames])
   const watts = useMemo(() => estimatedWatts(lights), [lights])
   const sunTimes = useMemo(() => sunTimesLocal(new Date()), [])
+  const bridgeKind = useMemo<BridgeKind>(() => loadBridgeConfig().kind, [])
 
   // Toasts ------------------------------------------------------------------
   const dismissToast = useCallback((id: number) => setToasts((ts) => ts.filter((t) => t.id !== id)), [])
@@ -303,7 +306,7 @@ export function LightsProvider({ children }: { children: React.ReactNode }) {
   const setTariff = useCallback((clp: number) => setTariffState(Math.max(1, Math.round(clp))), [])
 
   const value: Ctx = {
-    hydrated, bridgeName: bridge.name, lights, rooms, scenes, automations, history, tariff, watts, sunTimes,
+    hydrated, bridgeName: bridge.name, bridgeKind, lights, rooms, scenes, automations, history, tariff, watts, sunTimes,
     toggleLight, setBrightness, setTemp, setColor, renameLight, addLight, removeLight, renameRoom,
     toggleRoom, toggleGroup, setMaster, applyScene, saveScene, deleteScene, allOff,
     addAutomation, updateAutomation, toggleAutomation, deleteAutomation, setTariff,

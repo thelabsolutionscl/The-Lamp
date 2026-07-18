@@ -31,11 +31,20 @@ su acento cyan de marca (`#00d4cc`) reservado para lo vivo/activo y la atmósfer
 ## Arquitectura: puente a hardware
 
 La app nunca habla con dispositivos directamente: pasa por un **`LightBridge`**
-(`src/lib/bridge.ts`). La v0 usa `MockBridge` (estado simulado en localStorage);
-ya hay un **`HomeAssistantBridge`** (REST + WebSocket para estado en vivo) que se
-activa desde Ajustes con la URL de tu HA y un token de larga duración. Para otro
-sistema (Hue, Tuya…) se implementa la misma interfaz. El modelo y la semilla
-viven en `src/lib/lights.ts`.
+(`src/lib/bridge.ts`), seleccionable desde Ajustes:
+
+- **Simulado** (`MockBridge`): estado en localStorage (v0).
+- **Genérico (HTTP)** (`WebhookBridge`): controla **cualquier dispositivo con
+  API HTTP** (Shelly, Tasmota, webhook de Home Assistant, Node-RED, IFTTT, o un
+  proxy a la nube de tu marca). Cada luz configura sus endpoints on/off/brillo
+  desde su tarjeta (🔌). Las llamadas salen por el **backend propio**
+  (`src/app/api/device/route.ts`), así el navegador no choca con CORS ni
+  "mixed content", y los secretos quedan del lado servidor.
+- **Home Assistant** (`HomeAssistantBridge`): REST + WebSocket para estado en
+  vivo, con la URL de tu HA y un token de larga duración.
+
+Para otro sistema se implementa la misma interfaz. El modelo y la semilla viven
+en `src/lib/lights.ts`.
 
 ## Stack
 

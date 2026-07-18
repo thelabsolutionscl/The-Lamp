@@ -10,8 +10,11 @@ import {
   Pencil,
   Trash2,
   Check,
+  Plug,
   type LucideIcon,
 } from "lucide-react"
+import { DeviceConfigModal } from "@/components/app/DeviceConfigModal"
+import { loadDeviceConfigs, isConnected } from "@/lib/devices"
 import {
   TEMP_MIN,
   TEMP_MAX,
@@ -81,10 +84,14 @@ export function LampSwitch({
 // real de la luz (su temperatura o su RGB) y la intensidad del halo escala con
 // el brillo. Toma sus acciones del store.
 export function LightCard({ light }: { light: Light }) {
-  const { toggleLight, setBrightness, setTemp, setColor, renameLight, removeLight } = useLights()
+  const { toggleLight, setBrightness, setTemp, setColor, renameLight, removeLight, bridgeKind } = useLights()
   const [colorOpen, setColorOpen] = useState(false)
   const [renaming, setRenaming] = useState(false)
   const [draft, setDraft] = useState(light.name)
+  const [deviceOpen, setDeviceOpen] = useState(false)
+  // LightCard solo monta en cliente (tras hidratar), así que leer localStorage
+  // en el inicializador es seguro.
+  const [connected, setConnected] = useState(() => isConnected(loadDeviceConfigs()[light.id]))
   const Icon = KIND_ICONS[light.kind]
   const pct = light.brightness
   const glow = lightGlowColor(light)
@@ -176,11 +183,25 @@ export function LightCard({ light }: { light: Light }) {
             </p>
           </div>
         </div>
-        <LampSwitch
-          on={light.on}
-          onChange={(on) => toggleLight(light.id, on)}
-          label={`${light.on ? "Apagar" : "Encender"} ${light.name}`}
-        />
+        <div className="flex items-center gap-2">
+          {bridgeKind === "webhook" && (
+            <button
+              type="button"
+              onClick={() => setDeviceOpen(true)}
+              aria-label={`Conectar dispositivo de ${light.name}`}
+              title={connected ? "Dispositivo conectado" : "Conectar dispositivo"}
+              className="relative flex h-7 w-7 items-center justify-center rounded-lg border border-white/[0.1] text-white/45 transition-colors hover:border-[#00d4cc]/40 hover:text-white/80"
+            >
+              <Plug className="h-3.5 w-3.5" />
+              {connected && <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-[#00d4cc] ring-2 ring-[#141414]" />}
+            </button>
+          )}
+          <LampSwitch
+            on={light.on}
+            onChange={(on) => toggleLight(light.id, on)}
+            label={`${light.on ? "Apagar" : "Encender"} ${light.name}`}
+          />
+        </div>
       </div>
 
       {/* Intensidad */}
@@ -294,6 +315,16 @@ export function LightCard({ light }: { light: Light }) {
           )}
         </div>
       )}
+
+      <DeviceConfigModal
+        lightId={light.id}
+        lightName={light.name}
+        open={deviceOpen}
+        onClose={(saved) => {
+          setDeviceOpen(false)
+          if (saved) setConnected(isConnected(loadDeviceConfigs()[light.id]))
+        }}
+      />
     </div>
   )
 }
