@@ -63,6 +63,33 @@ El Camino 2 no requiere el 1. El Camino 3 es solo para uso remoto.
 
 ---
 
+### Variante: ampolletas WiZ (con el mini-proxy)
+
+Las **WiZ** son baratas y comunes, pero hablan **UDP**, no HTTP, así que no se
+conectan directo. The Lamp incluye un mini-proxy (`tools/wiz-proxy.mjs`) que
+traduce HTTP → WiZ. Solo Node, sin dependencias.
+
+1. Pon la ampolleta en tu WiFi con la app **WiZ** (una sola vez, ver más abajo).
+2. En el repo, en **otra terminal**, deja corriendo el proxy:
+   ```bash
+   npm run wiz
+   ```
+3. Descubre las ampolletas de tu red: abre **http://localhost:3400/discover** —
+   te devuelve la lista con su **IP** (ej. `192.168.1.77`).
+4. En The Lamp, conecta la luz con el **🔌** (cambia la IP por la tuya):
+
+   | Campo | Pega esto |
+   | --- | --- |
+   | Encender | `http://localhost:3400/on?ip=192.168.1.77` |
+   | Apagar | `http://localhost:3400/off?ip=192.168.1.77` |
+   | Brillo | `http://localhost:3400/brightness?ip=192.168.1.77&b={brightness}` |
+   | Color | `http://localhost:3400/color?ip=192.168.1.77&r={r}&g={g}&b={b}` |
+
+5. **Probar** → si la ampolleta responde, **Guardar**. Listo.
+
+> Tip: reserva la IP de la ampolleta en tu router (DHCP estático) para que no
+> cambie. O usa `/discover` cuando necesites reconfirmarla.
+
 ## Camino 3 — Usarla desde el teléfono / fuera de casa (desplegar)
 
 1. Crea una cuenta gratis en **Cloudflare**.
