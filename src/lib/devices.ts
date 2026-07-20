@@ -15,6 +15,8 @@ export type DeviceConfig = {
   offUrl?: string
   /** URL para fijar el brillo. Admite el marcador {brightness} (0–100). */
   brightnessUrl?: string
+  /** URL para fijar el color RGB. Admite {r} {g} {b} (0–255) y {hex} (rrggbb). */
+  colorUrl?: string
   /** Método HTTP (por defecto GET). */
   method?: "GET" | "POST"
   /** Cabecera Authorization opcional (ej: "Bearer xyz"). */
@@ -49,6 +51,13 @@ export function resolveRequests(cfg: DeviceConfig | undefined, changes: Partial<
 
   if (changes.brightness != null && cfg.brightnessUrl) {
     out.push({ url: tmpl(cfg.brightnessUrl, { brightness: changes.brightness }), method, headers })
+  }
+  if (changes.color && cfg.colorUrl) {
+    const n = parseInt(changes.color.replace("#", ""), 16)
+    const r = (n >> 16) & 255
+    const g = (n >> 8) & 255
+    const b = n & 255
+    out.push({ url: tmpl(cfg.colorUrl, { r, g, b, hex: changes.color.replace("#", "") }), method, headers })
   }
   return out
 }

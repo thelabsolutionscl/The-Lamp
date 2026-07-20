@@ -28,6 +28,7 @@ function Dialog({ lightId, lightName, onClose }: { lightId: string; lightName: s
   const [onUrl, setOnUrl] = useState(initial.onUrl ?? "")
   const [offUrl, setOffUrl] = useState(initial.offUrl ?? "")
   const [brightnessUrl, setBrightnessUrl] = useState(initial.brightnessUrl ?? "")
+  const [colorUrl, setColorUrl] = useState(initial.colorUrl ?? "")
   const [method, setMethod] = useState<"GET" | "POST">(initial.method ?? "GET")
   const [authHeader, setAuthHeader] = useState(initial.authHeader ?? "")
   const [test, setTest] = useState<TestState>("idle")
@@ -49,6 +50,7 @@ function Dialog({ lightId, lightName, onClose }: { lightId: string; lightName: s
     onUrl: onUrl.trim() || undefined,
     offUrl: offUrl.trim() || undefined,
     brightnessUrl: brightnessUrl.trim() || undefined,
+    colorUrl: colorUrl.trim() || undefined,
     method,
     authHeader: authHeader.trim() || undefined,
   })
@@ -99,7 +101,8 @@ function Dialog({ lightId, lightName, onClose }: { lightId: string; lightName: s
         <div className="flex max-h-[70vh] flex-col gap-3 overflow-y-auto px-6 py-5">
           {field("URL al encender", onUrl, setOnUrl, "http://192.168.1.50/relay/0?turn=on")}
           {field("URL al apagar", offUrl, setOffUrl, "http://192.168.1.50/relay/0?turn=off")}
-          {field("URL de brillo (usa {brightness})", brightnessUrl, setBrightnessUrl, "http://192.168.1.50/light/0?brightness={brightness}")}
+          {field("URL de brillo (usa {brightness})", brightnessUrl, setBrightnessUrl, "http://192.168.1.50/color/0?turn=on&gain={brightness}")}
+          {field("URL de color (usa {r} {g} {b})", colorUrl, setColorUrl, "http://192.168.1.50/color/0?turn=on&red={r}&green={g}&blue={b}")}
           <div className="grid grid-cols-2 gap-3">
             <label className="flex flex-col gap-1.5">
               <span className="font-mono text-[10px] uppercase tracking-[1.5px] text-white/40">Método</span>
